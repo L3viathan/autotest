@@ -1,7 +1,7 @@
 import inspect
 import random
 import string
-from itertools import combinations_with_replacement
+from itertools import combinations_with_replacement as combinations
 
 import click
 
@@ -9,6 +9,7 @@ def makestr(chars):
     return "".join(
         random.choice(chars) for _ in range(random.randint(1, 20))
     )
+
 
 def get_value(type):
     if type == int:
@@ -32,7 +33,7 @@ def get_value(type):
 
 
 def make_args(n):
-    for types in combinations_with_replacement(
+    for types in combinations(
         [int, str, float, tuple, None],
         n
     ):
@@ -62,7 +63,6 @@ def print_tests(fn, mod):
             print(f"    assert {mod}.{fname}({argstr}) == {r!r}")
 
 
-
 @click.command()
 @click.argument("filename", type=click.Path())
 @click.option("--write-file", is_flag=True)
@@ -85,4 +85,4 @@ def cli(filename, write_file):
         fp.close()
 
 if __name__ == '__main__':
-    cli()  # pytest: disable=no-value-for-parameter
+    cli()
