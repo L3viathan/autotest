@@ -27,11 +27,13 @@ def get_value(type):
     elif type == tuple:
         nargs = random.randint(0, 5)
         return next(make_args(nargs)) if nargs else ()
+    elif type == None:
+        return None
 
 
 def make_args(n):
     for types in combinations_with_replacement(
-        [int, str, float, tuple],
+        [int, str, float, tuple, None],
         n
     ):
         yield tuple(get_value(t) for t in types)
